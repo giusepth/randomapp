@@ -1,16 +1,50 @@
-# React + Vite
+# RandomApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Draw N random winners from a list of participants. A single-page React app with
+no backend and no persistence — everything lives in memory for the length of the
+session.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Paste a list, one participant per line; the live count updates as you type
+- Choose how many winners to draw
+- Optional duplicate weighting: a name listed twice gets two chances
+- Fisher-Yates shuffle for an unbiased draw, with a short suspense animation
+- Winners appear in a native `<dialog>` modal, with the type scaling to the
+  number of winners (1, 2–4, and 5+ each get their own step)
+- Copy the result to the clipboard as a numbered list
 
-## React Compiler
+The draw is validated before it runs: at least 2 participants, a whole number of
+winners greater than 0, and never more winners than there are available names.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the Oxlint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The dev server is pinned to `http://127.0.0.1:5180` in `vite.config.js` with
+`strictPort: true`, so it can run alongside another Vite project without
+fighting over port 5173.
+
+## Scripts
+
+| Command             | Description                                 |
+| ------------------- | ------------------------------------------- |
+| `npm run dev`       | Dev server with HMR on `127.0.0.1:5180`     |
+| `npm run build`     | Production build into `dist/`               |
+| `npm run preview`   | Serve the production build locally          |
+| `npm run lint`      | Lint with oxlint                            |
+
+## Design system
+
+Every colour, type step, spacing value and shadow is a custom property defined
+in `src/index.css`. Rebranding is a single block edit there: `src/App.css` only
+consumes tokens and never hardcodes a value. The interface copy is in Spanish.
+
+## Deliberately not included
+
+No backend, no database, no accounts and no persistence — reloading the page
+discards the participant list and any result already drawn. That is intentional
+for an MVP that runs entirely in the browser.
