@@ -122,50 +122,95 @@ function App() {
 
   return (
     <main className="container">
-      <header>
-        <h1>🎲 Sorteador de Jurados</h1>
-        <p>Ingresa los participantes (un nombre por línea) y elige cuántos jurados sortear.</p>
+      <header className="masthead">
+        {/*
+          Reserved brand zone.
+          Replace the placeholder emblem inside .logo-zone with the real asset:
+            <img className="logo" src="/logo.svg" alt="Nombre de la institución" />
+          There is room for the institution name plus one or two logos; keep
+          logos inside .logo-zone so the lockup stays balanced.
+        */}
+        <div className="brand">
+          <div className="logo-zone">
+            <svg
+              className="emblem"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M7 9h10M7 13h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M7 17h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="17.5" cy="13" r="1.6" fill="currentColor" />
+            </svg>
+          </div>
+          <div className="brand-text">
+            <h1>Sorteador de Jurados</h1>
+            {/* Institution name — replace with the real one. */}
+            <p className="org-name">Institución</p>
+          </div>
+        </div>
+        <p className="lede">
+          Ingresa los participantes (un nombre por línea) y elige cuántos
+          jurados sortear.
+        </p>
       </header>
 
-      <section className="panel">
-        <div className="list-header">
-          <h2>Participantes</h2>
-          <span className="badge">{pool.length}</span>
-        </div>
-        <textarea
-          value={rawText}
-          onChange={(e) => setRawText(e.target.value)}
-          placeholder={'Ana Gómez\nJuan Pérez\nMaría López\nPedro Ruiz'}
-          rows={12}
-        />
-        <label className="check">
-          <input
-            type="checkbox"
-            checked={allowDuplicates}
-            onChange={(e) => setAllowDuplicates(e.target.checked)}
+      <div className="sheet">
+        <section className="section">
+          <div className="section-head">
+            <h2 className="section-title">Participantes</h2>
+            <span className="count">{pool.length}</span>
+          </div>
+          <textarea
+            value={rawText}
+            onChange={(e) => setRawText(e.target.value)}
+            placeholder={'Ana Gómez\nJuan Pérez\nMaría López\nPedro Ruiz'}
+            rows={12}
           />
-          Permitir nombres repetidos
-        </label>
-      </section>
+          <label className="check">
+            <input
+              type="checkbox"
+              checked={allowDuplicates}
+              onChange={(e) => setAllowDuplicates(e.target.checked)}
+            />
+            Permitir nombres repetidos
+          </label>
+        </section>
 
-      <section className="panel">
-        <h2>Configuración</h2>
-        <div className="row">
-          <label htmlFor="amount">Cantidad de jurados</label>
-          <input
-            id="amount"
-            type="number"
-            min={1}
-            max={pool.length || undefined}
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-          />
-        </div>
-        <button className="primary" onClick={draw} disabled={drawing}>
-          {drawing ? 'Sorteando…' : '🎯 Sortear'}
-        </button>
-        {error && <p className="error">{error}</p>}
-      </section>
+        <section className="section">
+          <h2 className="section-title">Configuración</h2>
+          <div className="row">
+            <label htmlFor="amount">Cantidad de jurados</label>
+            <input
+              id="amount"
+              type="number"
+              min={1}
+              max={pool.length || undefined}
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+            />
+          </div>
+          <button type="button" className="btn btn-primary" onClick={draw} disabled={drawing}>
+            {drawing ? (
+              'Sorteando…'
+            ) : (
+              <>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                  <polyline points="16 3 21 3 21 8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="21 16 21 21 16 21" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                  <line x1="4" y1="20" x2="21" y2="3" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+                  <line x1="15" y1="15" x2="21" y2="21" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+                  <line x1="4" y1="4" x2="9" y2="9" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+                </svg>
+                Sortear
+              </>
+            )}
+          </button>
+          {error && <p className="error">{error}</p>}
+        </section>
+      </div>
 
       <dialog
         ref={dialogRef}
@@ -177,13 +222,16 @@ function App() {
         }}
       >
         <div className="modal-card">
-          <button className="modal-close" onClick={closeModal} aria-label="Cerrar">
-            ✕
-          </button>
-
-          <h2 id="winner-title">
-            {drawing ? '🎲 Sorteando jurados…' : '🏆 Jurados seleccionados'}
-          </h2>
+          <div className="modal-head">
+            <h2 id="winner-title" className="modal-title">
+              {drawing ? 'Sorteando jurados…' : 'Jurados seleccionados'}
+            </h2>
+            <button type="button" className="modal-close" onClick={closeModal} aria-label="Cerrar">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
 
           <ol className={`winner-list ${winnerSizeClass(amount)} ${drawing ? 'is-drawing' : ''}`}>
             {winners.map((name, i) => (
@@ -195,17 +243,24 @@ function App() {
           </ol>
 
           <div className="modal-actions">
-            <button className="ghost" onClick={copyResults} disabled={drawing || !winners.length}>
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={copyResults}
+              disabled={drawing || !winners.length}
+            >
               Copiar resultado
             </button>
-            <button className="primary compact" onClick={closeModal}>
+            <button type="button" className="btn btn-primary btn-compact" onClick={closeModal}>
               Cerrar
             </button>
           </div>
         </div>
       </dialog>
 
-      <footer>MVP — sin base de datos ni persistencia: todo queda en memoria.</footer>
+      <footer className="footer">
+        MVP — sin base de datos ni persistencia: todo queda en memoria.
+      </footer>
     </main>
   )
 }

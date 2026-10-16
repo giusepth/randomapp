@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local design tooling installed by `npx impeccable install`.
+# Ignored on purpose: it ships a ~21MB platform-specific binary.
+.opencode/
