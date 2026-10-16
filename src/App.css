@@ -153,21 +153,130 @@ button.ghost:hover:not(:disabled) {
   margin: 0.75rem 0 0;
 }
 
-.results ol {
-  margin: 0;
-  padding-left: 1.5rem;
-  display: grid;
-  gap: 0.5rem;
+/* ---------- Winner modal (native <dialog>) ---------- */
+
+.winner-modal {
+  width: min(720px, 92vw);
+  max-width: none;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
 }
 
-.results li {
-  font-size: 1.1rem;
+.winner-modal::backdrop {
+  background: rgba(8, 12, 22, 0.78);
+  backdrop-filter: blur(5px);
+}
+
+.modal-card {
+  position: relative;
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.modal-card h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.15rem;
+  text-align: center;
+  color: var(--muted);
   font-weight: 600;
 }
 
-.results li::marker {
-  color: var(--gold);
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.winner-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+  max-height: 55vh;
+  overflow-y: auto;
+  transition: opacity 0.12s ease;
+}
+
+.winner-list.is-drawing {
+  opacity: 0.78;
+}
+
+.winner-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  padding: 0.35rem 0.5rem;
   font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.winner-list .rank {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.14);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  color: var(--gold);
+  font-size: 1.05rem;
+}
+
+/* Winner type scale: fewer winners, bigger names. */
+.winner-list.size-huge .name {
+  font-size: clamp(2.75rem, 9vw, 5rem);
+}
+
+.winner-list.size-big .name {
+  font-size: clamp(1.9rem, 5.5vw, 3rem);
+}
+
+.winner-list.size-many .name {
+  font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+}
+
+.winner-list.size-many .rank {
+  width: 1.9rem;
+  height: 1.9rem;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+button.primary.compact {
+  width: auto;
+  min-width: 8rem;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
 }
 
 footer {
