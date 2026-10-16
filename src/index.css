@@ -1,27 +1,43 @@
 /* ==========================================================================
    Design tokens — the single source of truth for this interface's brand.
-   Rebranding means editing this block only: colors, type scale and spacing
-   are all expressed as custom properties here and consumed by App.css.
+   Rebranding means editing this block only: color, type scale, spacing and
+   elevation are all expressed as custom properties here and consumed by App.css.
+
+   The neutral ramp is deliberately cool rather than true grey, so it sits in
+   the same family as the institutional navy instead of fighting it.
    ========================================================================== */
 
 :root {
   color-scheme: light;
 
-  /* ---- Color ------------------------------------------------------------ */
-  --paper: #f2f3f1;          /* page background            */
-  --surface: #ffffff;        /* primary work surface       */
-  --surface-sunken: #f7f8f6; /* inset fields               */
-  --ink: #1a2430;            /* primary text               */
-  --ink-strong: #101820;     /* display headings           */
-  --ink-muted: #5a6472;      /* secondary text (6.0:1)     */
-  --ink-faint: #66707c;      /* placeholder (4.7:1)        */
-  --line: #d9dde1;           /* hairline separators        */
-  --line-strong: #8a939b;    /* control borders (3.1:1)    */
-  --brand: #17324f;          /* institutional navy         */
-  --brand-strong: #0f2438;   /* interactive hover          */
-  --brand-tint: #e8eef4;     /* quiet brand wash           */
-  --focus: #1f4e8c;          /* focus ring (8.3:1)         */
-  --danger: #a12a2a;         /* validation messages (7.3:1)*/
+  /* ---- Color: surfaces -------------------------------------------------- */
+  --paper-top: #edf1f7;      /* page canvas, top of the subtle wash    */
+  --paper-bottom: #e1e6ee;   /* page canvas, bottom of the wash        */
+  --surface: #ffffff;        /* primary work surface                   */
+  --surface-sunken: #f4f6f9; /* inset fields and wells                 */
+  --surface-tint: #e9eff7;   /* letterhead band, lower stop            */
+
+  /* ---- Color: ink ------------------------------------------------------- */
+  --ink: #1a2430;            /* primary text                           */
+  --ink-strong: #0f1820;     /* display headings and winner names      */
+  --ink-muted: #566070;      /* secondary text (5.7:1 on --surface)    */
+  --ink-faint: #5f6977;      /* placeholder text (5.1:1, WCAG AA)      */
+
+  /* ---- Color: lines ----------------------------------------------------- */
+  --line: #d6dbe2;           /* hairline separators                    */
+  --line-soft: #e6eaf0;      /* faintest dividers and wells            */
+  --line-strong: #8a939b;    /* control borders (3.1:1)                */
+
+  /* ---- Color: brand and semantics -------------------------------------- */
+  --brand: #17324f;          /* institutional navy                     */
+  --brand-hi: #1f4368;       /* top stop of control gradients          */
+  --brand-strong: #0f2438;   /* interactive hover and pressed          */
+  --brand-tint: #e6edf5;     /* quiet brand wash                       */
+  --brand-tint-strong: #d5e1ef; /* letterhead band, upper stop         */
+  --brand-edge: rgba(23, 50, 79, 0.14); /* brand hairline on tinted areas */
+  --focus: #1f4e8c;          /* focus ring (8.3:1)                     */
+  --danger: #a12a2a;         /* validation messages (7.3:1)            */
+  --danger-tint: #fdf3f3;    /* validation background                  */
 
   /* ---- Type ------------------------------------------------------------- */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
@@ -56,10 +72,23 @@
   --radius: 6px;
   --radius-lg: 12px;
 
-  /* ---- Elevation -------------------------------------------------------- */
-  --shadow-sheet: 0 1px 2px rgba(16, 24, 32, 0.04),
-    0 10px 30px rgba(16, 24, 32, 0.05);
-  --shadow-modal: 0 24px 60px rgba(16, 24, 32, 0.35);
+  /* ---- Elevation --------------------------------------------------------
+     Multi-layer shadows: a tight contact shadow for the edge plus a wide,
+     low-opacity one for the cast. Layering is what reads as depth; a single
+     heavy blur reads as a smudge.                                        */
+  --shadow-xs: 0 1px 1px rgba(15, 24, 32, 0.04),
+    0 1px 2px rgba(15, 24, 32, 0.05);
+  --shadow-sm: 0 1px 2px rgba(15, 24, 32, 0.05),
+    0 2px 6px rgba(15, 24, 32, 0.05);
+  --shadow-md: 0 1px 2px rgba(15, 24, 32, 0.05),
+    0 4px 10px rgba(15, 24, 32, 0.06), 0 16px 32px rgba(15, 24, 32, 0.08);
+  --shadow-lg: 0 2px 4px rgba(15, 24, 32, 0.06),
+    0 12px 28px rgba(15, 24, 32, 0.1), 0 40px 72px rgba(15, 24, 32, 0.18);
+
+  /* Recessed controls and lit edges. */
+  --shadow-inset: inset 0 1px 2px rgba(15, 24, 32, 0.07);
+  --edge-lit: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  --edge-lit-dark: inset 0 1px 0 rgba(255, 255, 255, 0.13);
 
   /* ---- Winner type scale (fewer winners, bigger names) ------------------ */
   --winner-huge: clamp(2.5rem, 9vw, 4.5rem);
@@ -79,7 +108,16 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  min-height: 100vh;
+  /* A barely-there vertical wash: gives the page atmosphere so the white
+     sheet has something to sit on, instead of floating on flat grey. */
+  background-color: var(--paper-bottom);
+  background-image: linear-gradient(
+    180deg,
+    var(--paper-top) 0%,
+    var(--paper-bottom) 100%
+  );
+  background-repeat: no-repeat;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);
