@@ -26,3 +26,8 @@ dist-ssr
 # Local design tooling installed by `npx impeccable install`.
 # Ignored on purpose: it ships a ~21MB platform-specific binary.
 .opencode/
+
+# Auto-generated skill registry (`gentle-ai skill-registry refresh`).
+# Ignored on purpose: it is regenerated per machine and embeds absolute
+# local paths, so committing it would not be portable.
+.atl/
