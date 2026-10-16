@@ -75,7 +75,7 @@ function App() {
       return 'Debés ingresar al menos 2 nombres, uno por línea.'
     }
     if (!Number.isInteger(amount) || amount < 1) {
-      return 'La cantidad de jurados debe ser un número entero mayor a 0.'
+      return 'La cantidad de ganadores debe ser un número entero mayor a 0.'
     }
     if (amount > pool.length) {
       return allowDuplicates
@@ -129,42 +129,16 @@ function App() {
       */}
       <header className="masthead">
         <div className="masthead-inner">
-          {/*
-            Reserved brand zone.
-            Replace the placeholder emblem inside .logo-zone with the real asset:
-              <img className="logo" src="/logo.svg" alt="Nombre de la institución" />
-            There is room for the institution name plus one or two logos; keep
-            logos inside .logo-zone so the lockup stays balanced.
-          */}
-          <div className="brand">
-            <div className="logo-zone">
-              <svg
-                className="emblem"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M7 9h10M7 13h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M7 17h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                <circle cx="17.5" cy="13" r="1.6" fill="currentColor" />
-              </svg>
-            </div>
-            <div className="brand-text">
-              <h1>Sorteador de Jurados</h1>
-              {/* Institution name — replace with the real one. */}
-              <p className="org-name">Institución</p>
-            </div>
-          </div>
-          <p className="lede">
-            Ingresa los participantes (un nombre por línea) y elige cuántos
-            jurados sortear.
-          </p>
+          <h1>RandomApp</h1>
         </div>
       </header>
 
       <main className="container">
+        <p className="lede">
+          Ingresa los participantes (un nombre por línea) y elige cuántos
+          ganadores sortear.
+        </p>
+
         <div className="sheet">
           <section className="section">
             <div className="section-head">
@@ -190,7 +164,7 @@ function App() {
           <section className="section">
             <h2 className="section-title">Configuración</h2>
             <div className="row">
-              <label htmlFor="amount">Cantidad de jurados</label>
+              <label htmlFor="amount">Cantidad de ganadores</label>
               <input
                 id="amount"
                 type="number"
@@ -232,7 +206,7 @@ function App() {
           <div className="modal-card">
             <div className="modal-head">
               <h2 id="winner-title" className="modal-title">
-                {drawing ? 'Sorteando jurados…' : 'Jurados seleccionados'}
+                {drawing ? 'Sorteando…' : 'Ganadores seleccionados'}
               </h2>
               <button type="button" className="modal-close" onClick={closeModal} aria-label="Cerrar">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">

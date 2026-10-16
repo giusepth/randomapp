@@ -1,4 +1,4 @@
-/* Component styles for the Sorteador de Jurados interface.
+/* Component styles for the RandomApp interface.
    All color, type and spacing values come from the tokens in src/index.css.
 
    Depth model: exactly two raised surfaces (the sheet and the modal) sitting on
@@ -15,88 +15,54 @@
 
 /* ---------- Masthead ---------------------------------------------------- */
 
-/* Full-bleed institutional letterhead: the one region the brand owns outright.
-   Its navy rule anchors the top of the page. */
+/* A slim navy app bar. The drawn 2px rule that used to close the old full
+   letterhead is still gone on purpose: it was the only hard-edged, full-bleed,
+   high-contrast element on the page and it sliced the composition in two while
+   every other edge was soft. The bar stays navy and releases into the page
+   through a short soft edge -- a long ramp through mid-tones reads as fog. */
 .masthead {
-  background-color: var(--surface-tint);
+  background-color: var(--brand);
   background-image: linear-gradient(
     180deg,
-    var(--brand-tint-strong) 0%,
-    var(--surface-tint) 100%
+    var(--band-top) 0%,
+    var(--brand) 34%,
+    var(--band-low) 82%,
+    var(--paper-top) 100%
   );
-  border-bottom: 2px solid var(--brand);
-  box-shadow: var(--edge-lit), 0 1px 3px rgba(15, 24, 32, 0.05);
+  color: var(--on-brand);
 }
 
-/* Re-centres the letterhead content on the same column as the sheet below. */
+/* Re-centres the wordmark on the same column as the sheet below. */
 .masthead-inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  max-width: 760px;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-5);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  min-width: 0;
-}
-
-/* Reserved logo zone. Holds one or two institution logos once supplied.
-   The white plate is lifted off the tinted band so the lockup reads as applied
-   to the letterhead rather than printed into it. */
-.logo-zone {
-  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  min-width: 3.5rem;
-  min-height: 3.5rem;
-  padding: var(--space-2) var(--space-3);
-  background: var(--surface);
-  border: 1px solid var(--brand-edge);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm), var(--edge-lit);
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-4);
 }
 
-.emblem {
-  width: 1.75rem;
-  height: 1.75rem;
-  color: var(--brand);
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  min-width: 0;
-}
-
-.org-name {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
+/* White on navy: muted grey on a coloured background reads washed out even
+   when it passes contrast, so the bar uses full white throughout. */
 h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: var(--text-display);
   font-weight: 600;
   line-height: var(--leading-tight);
-  letter-spacing: -0.01em;
-  color: var(--ink-strong);
+  letter-spacing: -0.02em;
+  color: var(--on-brand);
 }
 
+/* The page's own intro, sitting on the canvas below the bar. Centred to match
+   the wordmark above it: margin auto centres the 60ch block itself, since
+   text-align alone would only centre the lines inside a left-anchored box. */
 .lede {
-  margin: 0;
-  max-width: 58ch;
+  margin: 0 auto var(--space-5);
+  max-width: 60ch;
   color: var(--ink-muted);
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
+  text-align: center;
 }
 
 /* ---------- Work surface ------------------------------------------------ */
@@ -170,7 +136,7 @@ h1 {
 textarea {
   display: block;
   width: 100%;
-  min-height: 15rem;
+  min-height: 12rem;
   resize: vertical;
   background: var(--surface-sunken);
   color: var(--ink);
@@ -549,20 +515,15 @@ input[type="number"]:focus-visible {
   }
 
   .masthead-inner {
-    padding: var(--space-5) var(--space-3) var(--space-4);
+    padding: var(--space-3);
   }
 
-  h1 {
-    font-size: var(--text-xl);
+  .lede {
+    font-size: var(--text-base);
   }
 
   .section {
     padding: var(--space-4);
-  }
-
-  .logo-zone {
-    min-width: 3rem;
-    min-height: 3rem;
   }
 
   .modal-card {
