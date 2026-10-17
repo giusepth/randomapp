@@ -31,3 +31,7 @@ dist-ssr
 # Ignored on purpose: it is regenerated per machine and embeds absolute
 # local paths, so committing it would not be portable.
 .atl/
+
+# Local design reference exported from Stitch. Ignored on purpose: it is a
+# throwaway mockup used only to drive the redesign, not app source.
+stitch_random_name_selector_spa/
