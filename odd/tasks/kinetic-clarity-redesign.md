@@ -24,13 +24,13 @@ Branch: `feat/kinetic-clarity-redesign` · Delivery: `ask-on-risk` (default) · 
 
 ## Tasks
 
-- **T0** — Add `stitch_random_name_selector_spa/` to `.gitignore`. (S16) — inline
-- **T1** — Rewrite `src/index.css` with the Kinetic Clarity token system (color/type/space/radius/elevation) + Google Fonts import for Plus Jakarta Sans, Inter, Material Symbols. (S1, S17) — inline
-- **T2** — Rewrite `src/App.css` for the new layout and components. (S1, S4–S15) — inline
-- **T3** — Rewrite `src/App.jsx`: header/nav, participants area, toggles, utility pills, params + probability, CTA, history, modal, toast, confetti. (S2–S15) — inline
-- **T4** — Update `index.html` `lang`/`title`/font links. (S1, S2) — inline
-- **T5** — Update `README.md` to the new design system + name. (S2, S17) — inline
-- **T6** — Checks: `npm run build`, `npm run lint`, dev screenshot (desktop + mobile). (all) — inline
+- **T0 — done** (`806bd4e`) — Add `stitch_random_name_selector_spa/` to `.gitignore`. (S16) — inline
+- **T1 — done** (`6248f9a`) — Rewrite `src/index.css` with the Kinetic Clarity token system (color/type/space/radius/elevation) + Google Fonts import for Plus Jakarta Sans, Inter, Material Symbols. (S1, S17) — inline
+- **T2 — done** (`69e7761`) — Rewrite `src/App.css` for the new layout and components. (S1, S4–S15) — inline
+- **T3 — done** (`69e7761`) — Rewrite `src/App.jsx`: header/nav, participants area, toggles, utility pills, params + probability, CTA, history, modal, toast, confetti. (S2–S15) — inline
+- **T4 — done** (`69e7761`) — Update `index.html` `lang`/`title`/font links. (S1, S2) — inline
+- **T5 — done** (`ae4058d`) — Update `README.md` to the new design system + name. (S2, S17) — inline
+- **T6 — done** — Checks: `npm run build`, `npm run lint`, dev screenshot (desktop + mobile). (all) — inline
 
 ## Log
 
@@ -39,3 +39,10 @@ Branch: `feat/kinetic-clarity-redesign` · Delivery: `ask-on-risk` (default) · 
 - **L3** — Decision (user): scope = redesign the "Nombres" screen only; Ruleta/Equipos/Historial stay visible but unbuilt.
 - **L4** — Decision (user): visible app name = "RandomSelector".
 - **L5** — Verification constraint: no test runner in `package.json` (only `dev`/`build`/`lint`/`preview`). Verification = build + lint + visual screenshot; documented as an explicit exception to the default test-first policy.
+- **L6** — Implementation: `index.css` rewritten with primitive + semantic token layers; `App.css` rewritten with the new layout; `App.jsx` rewritten as the full Nombres screen; `index.html` given the new title/fonts; `README.md` refreshed. No dependency added — plain CSS mapped from the mockup's Tailwind tokens; icons via the Material Symbols font.
+- **L7** — Verification (build + lint): clean. `npm run build` ✓ · `npm run lint` ✓ (0 warnings).
+- **L8** — Verification (behavioral probe over CDP, real clicks, `/tmp/opencode/probe.mjs`): sample loads 12 names; badge "12 nombres cargados"; probability 25.0% / ratio 3/12 at 3 winners; modal opens with 3 cards; podium `["1° Lugar","2° Lugar","3° Lugar"]`; "Excluir y repetir" drops the 3 winners (12 → 9, none of the excluded names remain) and adds a history entry; clear empties the list; duplicates toggle changes unique count 2 ↔ 3; 1-name draw shows the validation error; toast becomes visible on sample load. All pass.
+- **L9** — Verification (visual, CDP screenshots at 1280×900 and 390×844): header/nav/hero/pills/editor with gutter/params/probability CTA/history/footer render as designed; modal podiums for 1 and 3 winners; buttons fit on one line after widening the modal to 40rem.
+- **L10** — Verification (impeccable detector over the live URL): 14 findings → 2. Fixed: micro-text raised to the 11–12px legibility floor; placeholder/gutter darkened to clear WCAG AA; integrity-tag and CTA contrast corrected; the decorative pulsing dot made static. Remaining 2 are brief-pinned and accepted: the Plus Jakarta Sans/Inter pairing and the "Motor Criptográfico v2.4" eyebrow above the H1 are both mandated by the mockup and DESIGN.md.
+- **L11** — Delivery: 4 work-unit commits on `feat/kinetic-clarity-redesign`. RDD is globally off, so no native review was started; ordinary checks (build, lint, probe, screenshots) are the verification. Push/PR left to the user.
+
