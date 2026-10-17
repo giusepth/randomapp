@@ -1,110 +1,158 @@
 /* ==========================================================================
-   Design tokens — the single source of truth for this interface's brand.
-   Rebranding means editing this block only: color, type scale, spacing and
-   elevation are all expressed as custom properties here and consumed by App.css.
+   Design tokens — "Kinetic Clarity", the single source of truth for this
+   interface's brand. Rebranding means editing this block only: every colour,
+   type step, spacing value, radius and shadow is a custom property here and is
+   consumed by App.css.
 
-   The neutral ramp is deliberately cool rather than true grey, so it sits in
-   the same family as the institutional navy instead of fighting it.
+   Two layers live below:
+     1. Primitive tokens — the raw palette and scales (colour ramps, type steps,
+        spacing, radius, elevation). These are the "what we have" layer.
+     2. Semantic tokens — role aliases (--canvas, --card, --text, --brand …)
+        that components read. Components should almost always use these, so a
+        palette swap never touches a rule in App.css.
    ========================================================================== */
 
 :root {
   color-scheme: light;
 
-  /* ---- Color: surfaces -------------------------------------------------- */
-  --paper-top: #edf1f7;      /* page canvas, top of the subtle wash    */
-  --paper-bottom: #e1e6ee;   /* page canvas, bottom of the wash        */
-  --surface: #ffffff;        /* primary work surface                   */
-  --surface-sunken: #f4f6f9; /* inset fields and wells                 */
-  --surface-tint: #e9eff7;   /* faintest brand-tinted surface          */
+  /* ---- Primitive: indigo (primary) ------------------------------------- */
+  --indigo-50: #eef2ff;
+  --indigo-100: #e0e7ff;
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;   /* brand anchor                       */
+  --indigo-700: #4338ca;
 
-  /* ---- Color: ink ------------------------------------------------------- */
-  --ink: #1a2430;            /* primary text                           */
-  --ink-strong: #0f1820;     /* display headings and winner names      */
-  --ink-muted: #566070;      /* secondary text (5.7:1 on --surface)    */
-  --ink-faint: #5f6977;      /* placeholder text (5.1:1, WCAG AA)      */
+  /* ---- Primitive: emerald (secondary / victory) ------------------------ */
+  --emerald-50: #ecfdf5;
+  --emerald-500: #10b981;  /* positive confirmation + winner     */
+  --emerald-600: #059669;
+  --emerald-800: #065f46;
 
-  /* ---- Color: lines ----------------------------------------------------- */
-  --line: #d6dbe2;           /* hairline separators                    */
-  --line-soft: #e6eaf0;      /* faintest dividers and wells            */
-  --line-strong: #8a939b;    /* control borders (3.1:1)                */
+  /* ---- Primitive: amber (tertiary / celebration) ----------------------- */
+  --amber-50: #fffbeb;
+  --amber-100: #fef3c7;
+  --amber-500: #f59e0b;    /* anticipation, trophy, confetti     */
+  --amber-600: #d97706;
+  --amber-800: #92400e;
 
-  /* ---- Color: brand and semantics -------------------------------------- */
-  --brand: #17324f;          /* institutional navy                     */
-  --brand-hi: #1f4368;       /* top stop of control gradients          */
-  --brand-strong: #0f2438;   /* interactive hover and pressed          */
-  --brand-tint: #e6edf5;     /* quiet brand wash                       */
-  --brand-edge: rgba(23, 50, 79, 0.14); /* brand hairline on tinted areas */
-  --focus: #1f4e8c;          /* focus ring (8.3:1)                     */
-  --danger: #a12a2a;         /* validation messages (7.3:1)            */
-  --danger-tint: #fdf3f3;    /* validation background                  */
+  /* ---- Primitive: slate (neutral ramp) --------------------------------- */
+  --slate-50: #f8fafc;     /* canvas                             */
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;    /* structural borders                 */
+  --slate-300: #cbd5e1;    /* active/emphasis borders            */
+  --slate-400: #94a3b8;    /* subtle / placeholder text          */
+  --slate-500: #64748b;
+  --slate-600: #475569;    /* supporting text                    */
+  --slate-700: #334155;
+  --slate-900: #0f172a;    /* primary text                       */
 
-  /* ---- Color: inverted letterhead ---------------------------------------
-     The band is the one region the brand owns outright, so it flips the
-     palette: navy background, light text. The final gradient stop is the page
-     canvas colour, which lets the band dissolve into the page instead of being
-     cut off by a drawn rule.                                             */
-  --band-top: #0a1725;       /* deep navy at the very top              */
-  --band-low: #1e3d5f;       /* stays navy right up to the soft edge   */
-  --on-brand: #ffffff;       /* headings on the band (13.1:1)          */
+  /* ---- Primitive: status ---------------------------------------------- */
+  --red-50: #fef2f2;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
 
-  /* ---- Type ------------------------------------------------------------- */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
-    "Times New Roman", serif;
+  /* ---- Semantic: surfaces --------------------------------------------- */
+  --canvas: var(--slate-50);        /* page background        */
+  --card: #ffffff;                  /* elevated card surface  */
+  --card-sunken: var(--slate-100);  /* inset wells/inputs     */
+  --card-muted: #f1f5f9;            /* quiet chips/rows       */
+  --card-floating: #ffffff;         /* level-2 floating       */
 
-  --text-2xs: 0.6875rem;
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.375rem;
-  --text-2xl: 1.75rem;
-  --text-3xl: 2.25rem;
-  /* Header wordmark step. Still a clear jump above the 12-18px body scale, but
-     sized for a slim app header bar rather than a full letterhead. */
-  --text-display: clamp(1.5rem, 2.8vw, 2.25rem);
+  /* ---- Semantic: ink --------------------------------------------------- */
+  --text: var(--slate-900);         /* primary text           */
+  --text-muted: var(--slate-600);   /* supporting text        */
+  /* Placeholder/gutter tone: deliberately darker than the mockup's slate-400
+     so it clears WCAG AA (4.5:1) on the sunken field background. */
+  --text-subtle: #5b6b84;
+  --text-on-brand: #ffffff;
+
+  /* ---- Semantic: lines ------------------------------------------------- */
+  --border: var(--slate-200);       /* default structural     */
+  --border-strong: var(--slate-300);/* active/emphasis        */
+  --border-soft: rgba(226, 232, 240, 0.6);
+
+  /* ---- Semantic: brand and accents ------------------------------------ */
+  --brand: var(--indigo-600);
+  --brand-strong: var(--indigo-500);
+  --brand-deep: var(--indigo-700);
+  --brand-tint: var(--indigo-50);
+  --brand-ring: rgba(99, 102, 241, 0.15);
+
+  --success: var(--emerald-500);
+  --success-strong: var(--emerald-600);
+  --success-tint: var(--emerald-50);
+  --success-ink: var(--emerald-800);
+
+  --accent: var(--amber-500);
+  --accent-strong: var(--amber-600);
+  --accent-tint: var(--amber-50);
+
+  --danger: var(--red-600);
+  --danger-strong: var(--red-700);
+  --danger-tint: var(--red-50);
+  --danger-hover: #fee2e2;
+
+  --focus: var(--brand-strong);
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* Display + headline steps (Plus Jakarta Sans). */
+  --text-display: clamp(2.25rem, 6vw, 3.5rem); /* 36 -> 56px            */
+  --text-headline-lg: clamp(1.625rem, 3.6vw, 2rem); /* 26 -> 32px      */
+  --text-headline-md: 1.375rem;  /* 22px                              */
+  --text-headline-sm: 1.125rem;  /* 18px                              */
+  /* Body + label steps (Inter / Plus Jakarta Sans). */
+  --text-body-lg: 1rem;          /* 16px                              */
+  --text-body-md: 0.875rem;      /* 14px                              */
+  --text-body-sm: 0.75rem;       /* 12px                              */
+  --text-label-lg: 0.875rem;     /* 14px                              */
+  --text-label-md: 0.75rem;      /* 12px                              */
+  --text-label-sm: 0.6875rem;    /* 11px — legibility floor for UI    */
 
   --leading-tight: 1.15;
+  --leading-snug: 1.3;
   --leading-normal: 1.6;
+  --leading-code: 1.5;           /* textarea/gutter line rhythm       */
 
-  /* ---- Spacing (4px base) ---------------------------------------------- */
+  /* ---- Spacing (4px base) --------------------------------------------- */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-5: 1.5rem;
   --space-6: 2rem;
-  --space-7: 3rem;
+  --space-7: 2.5rem;
   --space-8: 4rem;
 
-  /* ---- Radius ----------------------------------------------------------- */
-  --radius-sm: 3px;
-  --radius: 6px;
-  --radius-lg: 12px;
+  /* ---- Radius ---------------------------------------------------------- */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
 
-  /* ---- Elevation --------------------------------------------------------
-     Multi-layer shadows: a tight contact shadow for the edge plus a wide,
-     low-opacity one for the cast. Layering is what reads as depth; a single
-     heavy blur reads as a smudge.                                        */
-  --shadow-xs: 0 1px 1px rgba(15, 24, 32, 0.04),
-    0 1px 2px rgba(15, 24, 32, 0.05);
-  --shadow-sm: 0 1px 2px rgba(15, 24, 32, 0.05),
-    0 2px 6px rgba(15, 24, 32, 0.05);
-  --shadow-md: 0 1px 2px rgba(15, 24, 32, 0.05),
-    0 4px 10px rgba(15, 24, 32, 0.06), 0 16px 32px rgba(15, 24, 32, 0.08);
-  --shadow-lg: 0 2px 4px rgba(15, 24, 32, 0.06),
-    0 12px 28px rgba(15, 24, 32, 0.1), 0 40px 72px rgba(15, 24, 32, 0.18);
-
-  /* Recessed controls and lit edges. */
-  --shadow-inset: inset 0 1px 2px rgba(15, 24, 32, 0.07);
-  --edge-lit: inset 0 1px 0 rgba(255, 255, 255, 0.65);
-  --edge-lit-dark: inset 0 1px 0 rgba(255, 255, 255, 0.13);
-
-  /* ---- Winner type scale (fewer winners, bigger names) ------------------ */
-  --winner-huge: clamp(2.5rem, 9vw, 4.5rem);
-  --winner-big: clamp(1.75rem, 5.5vw, 2.75rem);
-  --winner-many: clamp(1.25rem, 3.2vw, 1.75rem);
+  /* ---- Elevation -------------------------------------------------------
+     Directional multi-layer shadows: a tight contact shadow for the edge plus
+     a wider cast. Layering is what reads as depth; one heavy blur reads as a
+     smudge. Level names match DESIGN.md.                                   */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08),
+    0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.1),
+    0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --shadow-glow: 0 0 48px -8px rgba(99, 102, 241, 0.25),
+    0 0 24px -4px rgba(245, 158, 11, 0.2);
 }
 
 *,
@@ -120,19 +168,19 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  /* A barely-there vertical wash: gives the page atmosphere so the white
-     sheet has something to sit on, instead of floating on flat grey. */
-  background-color: var(--paper-bottom);
-  background-image: linear-gradient(
-    180deg,
-    var(--paper-top) 0%,
-    var(--paper-bottom) 100%
-  );
-  background-repeat: no-repeat;
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
+  background-color: var(--canvas);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Respect the OS motion preference globally: any component animation only
+   turns on inside the explicit opt-out of this query (App.css re-enables). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
