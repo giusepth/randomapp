@@ -337,8 +337,13 @@
 
 /* ---------- Participants field (line gutter + textarea) ----------------- */
 
+/* The box keeps a fixed height no matter how many lines are pasted: the
+   textarea scrolls internally and the gutter scrolls with it (synced in JS).
+   Without this cap the per-line gutter items would stretch the whole card. */
 .editor {
   display: flex;
+  height: 17rem;
+  overflow: hidden;
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   background: var(--card-sunken);
@@ -368,8 +373,9 @@
 .editor__input {
   flex: 1;
   min-width: 0;
-  min-height: 15rem;
-  resize: vertical;
+  min-height: 0;
+  resize: none;
+  overflow-y: auto;
   border: none;
   background: transparent;
   color: var(--text);

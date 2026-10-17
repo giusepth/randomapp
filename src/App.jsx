@@ -78,6 +78,7 @@ function App() {
   const [preview, setPreview] = useState('')
 
   const dialogRef = useRef(null)
+  const gutterRef = useRef(null)
   const intervalRef = useRef(null)
   const toastTimerRef = useRef(null)
   const canvasRef = useRef(null)
@@ -449,7 +450,7 @@ function App() {
 
               <div>
                 <div className="editor">
-                  <div className="editor__gutter" aria-hidden="true">
+                  <div className="editor__gutter" aria-hidden="true" ref={gutterRef}>
                     {Array.from({ length: lineCount }, (_, i) => (
                       <div key={i}>{i + 1}</div>
                     ))}
@@ -459,6 +460,9 @@ function App() {
                     className="editor__input"
                     value={rawText}
                     onChange={(e) => updateRawText(e.target.value)}
+                    onScroll={(e) => {
+                      if (gutterRef.current) gutterRef.current.scrollTop = e.currentTarget.scrollTop
+                    }}
                     placeholder={'Ingresa un nombre o correo por línea...\nEjemplo:\nCarlos Martínez\nLucía Méndez'}
                     rows={12}
                     aria-label="Participantes, un nombre por línea"
